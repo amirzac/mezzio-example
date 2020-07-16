@@ -14,6 +14,7 @@ use Mezzio\Router\Middleware\ImplicitOptionsMiddleware;
 use Mezzio\Router\Middleware\MethodNotAllowedMiddleware;
 use Mezzio\Router\Middleware\RouteMiddleware;
 use Psr\Container\ContainerInterface;
+use PhpMiddleware\PhpDebugBar\PhpDebugBarMiddleware;
 
 /**
  * Setup middleware pipeline:
@@ -41,6 +42,9 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
     // - $app->pipe('/api', $apiMiddleware);
     // - $app->pipe('/docs', $apiDocMiddleware);
     // - $app->pipe('/files', $filesMiddleware);
+    if (! empty($container->get('config')['debug'])) {
+        $app->pipe(PhpDebugBarMiddleware::class);
+    }
 
     // Register the routing middleware in the middleware pipeline.
     // This middleware registers the Mezzio\Router\RouteResult request attribute.
