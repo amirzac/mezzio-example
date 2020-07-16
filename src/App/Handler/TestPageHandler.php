@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Handler;
 
 use Laminas\Diactoros\Response\HtmlResponse;
+use Mezzio\Helper\Template\TemplateVariableContainer;
 use Mezzio\Template\TemplateRendererInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -21,6 +22,11 @@ class TestPageHandler implements RequestHandlerInterface
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
+        /* @var $templateVariableContainer TemplateVariableContainer */
+        $templateVariableContainer = $request->getAttribute(TemplateVariableContainer::class);
+
+        dd($templateVariableContainer->get('test_var'));
+
         return new HtmlResponse($this->template->render('app::test-page'));
     }
 

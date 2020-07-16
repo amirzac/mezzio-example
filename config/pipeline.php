@@ -6,6 +6,7 @@ use Laminas\Stratigility\Middleware\ErrorHandler;
 use Mezzio\Application;
 use Mezzio\Handler\NotFoundHandler;
 use Mezzio\Helper\ServerUrlMiddleware;
+use Mezzio\Helper\Template\TemplateVariableContainer;
 use Mezzio\Helper\UrlHelperMiddleware;
 use Mezzio\MiddlewareFactory;
 use Mezzio\Router\Middleware\DispatchMiddleware;
@@ -15,6 +16,7 @@ use Mezzio\Router\Middleware\MethodNotAllowedMiddleware;
 use Mezzio\Router\Middleware\RouteMiddleware;
 use Psr\Container\ContainerInterface;
 use PhpMiddleware\PhpDebugBar\PhpDebugBarMiddleware;
+use App\Middleware\InjectTestVariableMiddleware;
 
 /**
  * Setup middleware pipeline:
@@ -69,6 +71,12 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
     // - route-based authentication
     // - route-based validation
     // - etc.
+    $app->pipe(\Laminas\Stratigility\path(
+        '/test',
+        $factory->lazy(InjectTestVariableMiddleware::class)
+    ));
+//    $app->pipe(InjectTestVariableMiddleware::class);
+//    $app->pipe(TemplateVariableContainer::class);
 
     // Register the dispatch middleware in the middleware pipeline
     $app->pipe(DispatchMiddleware::class);
