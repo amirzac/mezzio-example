@@ -25,8 +25,6 @@ class TestPageHandler implements RequestHandlerInterface
         /* @var $templateVariableContainer TemplateVariableContainer */
         $templateVariableContainer = $request->getAttribute(TemplateVariableContainer::class);
 
-        dd($templateVariableContainer->get('test_var'));
-
         return new HtmlResponse($this->template->render('app::test-page'));
     }
 

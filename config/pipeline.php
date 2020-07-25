@@ -78,6 +78,8 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
 //    $app->pipe(InjectTestVariableMiddleware::class);
 //    $app->pipe(TemplateVariableContainer::class);
 
+    $app->pipe(\App\Middleware\TemplateDefaultsMiddleware::class);
+
     // Register the dispatch middleware in the middleware pipeline
     $app->pipe(DispatchMiddleware::class);
 
