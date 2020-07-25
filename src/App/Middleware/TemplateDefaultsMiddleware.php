@@ -9,6 +9,8 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Mezzio\Flash\FlashMessagesInterface;
+use Mezzio\Flash\FlashMessageMiddleware;
 
 class TemplateDefaultsMiddleware implements MiddlewareInterface
 {
@@ -25,6 +27,15 @@ class TemplateDefaultsMiddleware implements MiddlewareInterface
             TemplateRendererInterface::TEMPLATE_ALL,
             'security',
             true//$request->getAttribute(UserInterface::class)
+        );
+
+        // Inject all flash messages
+        /** @var FlashMessagesInterface $flashMessages */
+        $flashMessages = $request->getAttribute(FlashMessageMiddleware::FLASH_ATTRIBUTE);
+        $this->templateRenderer->addDefaultParam(
+            TemplateRendererInterface::TEMPLATE_ALL,
+            'notifications',
+            $flashMessages ? $flashMessages->getFlashes() : []
         );
 
         return $handler->handle($request);
