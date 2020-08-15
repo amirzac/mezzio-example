@@ -42,18 +42,18 @@ $this->inlineScript()
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a href="https://docs.mezzio.dev/mezzio" target="_blank" class="nav-link">
-                                <i class="fa fa-book"></i> Docs
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="https://github.com/mezzio/mezzio" target="_blank" class="nav-link">
-                                <i class="fa fa-wrench"></i> Contribute
-                            </a>
-                        </li>
-                        <li class="nav-item">
                             <a href="<?=$this->url('api.ping')?>" class="nav-link">
                                 Ping Test
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="<?=$this->url('flash')?>" class="nav-link">
+                                Flash
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="<?=$this->url('test')?>" class="nav-link">
+                                Test
                             </a>
                         </li>
                     </ul>
@@ -64,6 +64,13 @@ $this->inlineScript()
 
     <div class="app-content">
         <main class="container">
+            <?php if($notifications):?>
+                <?php foreach ($notifications as $notification): ?>
+                    <div class="alert alert-warning" role="alert">
+                        <?=$notification?>
+                    </div>
+                <?php endforeach ?>
+            <?php endif;?>
             <?=$this->content?>
         </main>
     </div>
