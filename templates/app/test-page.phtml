@@ -9,3 +9,15 @@
 <a href="<?= $this->url('home'); ?>">Home page</a>
 
 <h1>Hello world</h1>
+
+<?php
+// within a view script
+$form = $this->form;
+
+// Assuming the "test" route exists...
+$form->setAttribute('action', $this->url('test'));
+
+// Set the method attribute for the form
+$form->setAttribute('method', 'post');
+
+echo $this->form($form);

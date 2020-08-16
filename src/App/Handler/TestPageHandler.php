@@ -10,8 +10,7 @@ use Mezzio\Template\TemplateRendererInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Laminas\Form\Element;
-use Laminas\Form\Form;
+use App\Form\ContactForm;
 
 class TestPageHandler implements RequestHandlerInterface
 {
@@ -27,27 +26,10 @@ class TestPageHandler implements RequestHandlerInterface
         /* @var $templateVariableContainer TemplateVariableContainer */
         $templateVariableContainer = $request->getAttribute(TemplateVariableContainer::class);
 
-//         $username = new Element\Text('username');
-//         $username->setLabel('Username');
-//         $username->setAttributes([
-//             'class' => 'username',
-//             'size'  => '30',
-//         ]);
-
-//         $password = new Element\Password('password');
-//         $password->setLabel('Password');
-//         $password->setAttributes([
-//             'size'  => '30',
-//         ]);
-
-//         $form = new Form('my-form');
-//         $form->add($username);
-//         $form->add($password);
-
-// //        dd($form->get('username'));
+        $form = new ContactForm();
 
         return new HtmlResponse($this->template->render('app::test-page', [
-            //'form' => $form,
+            'form' => $form,
         ]));
     }
 
